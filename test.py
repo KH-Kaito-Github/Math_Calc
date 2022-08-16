@@ -2,9 +2,9 @@
 import re
 
 def Main():
-    literal_A = "-2a"
-    literal_B = "3a"
-    print("文字式の掛け算>> "+literal_A+"・"+literal_B+"="+CalcSerLitToExp_LiteralEx(CalcMalti_LiteralEx(literal_A,literal_B)))
+    literal_A = input("A>> ")
+    literal_B = input("B>> ")
+    print("文字式の掛け算>> "+literal_A+"・"+literal_B+"="+CalcMalti_LiteralEx(literal_A,literal_B))
     print("文字式の足し算>> "+literal_A+"+"+literal_B+"="+CalcAdd_LiteralEx(literal_A,literal_B))
 
 def CalcMalti_LiteralEx(A,B):
@@ -34,9 +34,9 @@ def CalcMalti_LiteralEx(A,B):
             C = int(A_coefficient) * int(B_coefficient)
         C_literal = A_literal+B_literal
         if(A_sub == 1 and B_sub == 1):
-            return  "".join(sorted(str(C)+C_literal))
+            return  str(C)+"".join(sorted(C_literal))
         else:
-            multiple_ret = "".join(sorted(str(C)+C_literal))
+            multiple_ret = str(C)+"".join(sorted(C_literal))
             return "-"+str(multiple_ret)
     else:
         pattern = '[0-9]*'
@@ -55,7 +55,7 @@ def CalcMalti_LiteralEx(A,B):
         else:
             C = int(A_coefficient) * int(B_coefficient)
         C_literal = A_literal+B_literal
-        return  "".join(sorted(str(C)+C_literal))
+        return  str(C)+"".join(sorted(C_literal))
 def CalcAdd_LiteralEx(A,B):
     A_sub = 0
     B_sub = 0
@@ -80,11 +80,22 @@ def CalcAdd_LiteralEx(A,B):
         else:
             if(A_sub == 1):
                 C = int(B_coefficient) - int(A_coefficient)
+                return  str(C)+A_literal
             if(B_sub == 1):
                 C = int(A_coefficient) - int(B_coefficient)
-        return  str(C)+A_literal
+                return  str(C)+A_literal
+            C = int(A_coefficient)+int(B_coefficient)
+            return str(C)+A_literal
     else:
-        return  A+"+"+B
+        if(A_sub==1 and B_sub==1):
+            return "-"+A+"-"+B
+        else:
+            if(A_sub==1):
+                return "-"+A+"+"+B
+            elif(B_sub==1):
+                return A+"-"+B
+            else:
+                return A+"+"+B          
 def CalcSerLitToExp_LiteralEx(A):
     A_sub = 0
     if(A[0]=="-"):
